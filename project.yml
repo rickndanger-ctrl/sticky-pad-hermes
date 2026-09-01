@@ -1,0 +1,48 @@
+name: StickyPad
+options:
+  bundleIdPrefix: com.richardholguin
+  deploymentTarget:
+    macOS: "14.0"
+settings:
+  base:
+    SWIFT_VERSION: 6.0
+    MACOSX_DEPLOYMENT_TARGET: 14.0
+targets:
+  StickyPad:
+    type: application
+    platform: macOS
+    sources:
+      - StickyPad
+    resources:
+      - path: StickyPad/Resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.richardholguin.StickyPad
+        PRODUCT_NAME: StickyPad
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Sticky Pad
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.productivity
+        INFOPLIST_KEY_LSUIElement: YES
+        INFOPLIST_KEY_NSHumanReadableCopyright: Copyright Richard Holguin
+        CODE_SIGN_STYLE: Automatic
+        ENABLE_HARDENED_RUNTIME: NO
+  StickyPadTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - StickyPadTests
+    dependencies:
+      - target: StickyPad
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.richardholguin.StickyPadTests
+        GENERATE_INFOPLIST_FILE: YES
+schemes:
+  StickyPad:
+    build:
+      targets:
+        StickyPad: all
+        StickyPadTests: [test]
+    test:
+      targets:
+        - StickyPadTests

@@ -1,0 +1,455 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0AE9B1C5D760C9547575A9BD /* StickyPadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A018451644C6394AA023451 /* StickyPadTests.swift */; };
+		0C34544E0A4BBC579D5FB30D /* TaskProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2B767D0652661D1B426A92 /* TaskProject.swift */; };
+		13EBB4BF566084B897A37BA4 /* TaskNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85FEC819B837F333225CE97 /* TaskNoteView.swift */; };
+		14D555EB7C74CAF1F2BDADFB /* MarkdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727018B96FBEA2B08CF90665 /* MarkdownView.swift */; };
+		3330AC77EEB2144A435BC529 /* ProjectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A19CF403C593796DFABE99 /* ProjectsView.swift */; };
+		5141E030D58E43E615435FFF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F07DF036C1C51CE6F30CBEB /* main.swift */; };
+		62DEAF02F19E4FCECFF51691 /* Hermes-Task-Template.md in Resources */ = {isa = PBXBuildFile; fileRef = 0CB5F5A24EE448FE3FC91961 /* Hermes-Task-Template.md */; };
+		6377DFF53C1FA16427B8648F /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AFFBA0E2818D78CCADCAA8E /* WindowManager.swift */; };
+		70B943542F7516576EC4D388 /* NoteDocumentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D9039D705F78806A9FC1FA4 /* NoteDocumentModel.swift */; };
+		764F985939E72B299E05CFF3 /* TaskTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E562195591264E2C67E5592 /* TaskTemplate.swift */; };
+		B69874F0853C26D0363F91D1 /* ProjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3304A0D49956EE3A8DF57EFC /* ProjectStore.swift */; };
+		BF69F1CD92886A9E6C53C187 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64196C1E53EA685461195FFA /* AppDelegate.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		593CAAD0BBDC65B1823EC711 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A53EC850E17D9B30E06D6222 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 91A8AAC03FA0931AE388AEF6;
+			remoteInfo = StickyPad;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		00A19CF403C593796DFABE99 /* ProjectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsView.swift; sourceTree = "<group>"; };
+		0CB5F5A24EE448FE3FC91961 /* Hermes-Task-Template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Hermes-Task-Template.md"; sourceTree = "<group>"; };
+		1E562195591264E2C67E5592 /* TaskTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTemplate.swift; sourceTree = "<group>"; };
+		2F07DF036C1C51CE6F30CBEB /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		3304A0D49956EE3A8DF57EFC /* ProjectStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectStore.swift; sourceTree = "<group>"; };
+		3A018451644C6394AA023451 /* StickyPadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyPadTests.swift; sourceTree = "<group>"; };
+		4C2B767D0652661D1B426A92 /* TaskProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskProject.swift; sourceTree = "<group>"; };
+		64196C1E53EA685461195FFA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		727018B96FBEA2B08CF90665 /* MarkdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownView.swift; sourceTree = "<group>"; };
+		74C62B28650680B0A428918D /* StickyPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StickyPad.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7AFFBA0E2818D78CCADCAA8E /* WindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowManager.swift; sourceTree = "<group>"; };
+		7D9039D705F78806A9FC1FA4 /* NoteDocumentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDocumentModel.swift; sourceTree = "<group>"; };
+		902F49D8CF7D3FF462ACEFF0 /* StickyPadTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StickyPadTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E85FEC819B837F333225CE97 /* TaskNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskNoteView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		2A46B0B5F35C5E9A4FADD416 /* StickyPad */ = {
+			isa = PBXGroup;
+			children = (
+				64196C1E53EA685461195FFA /* AppDelegate.swift */,
+				2F07DF036C1C51CE6F30CBEB /* main.swift */,
+				727018B96FBEA2B08CF90665 /* MarkdownView.swift */,
+				7D9039D705F78806A9FC1FA4 /* NoteDocumentModel.swift */,
+				3304A0D49956EE3A8DF57EFC /* ProjectStore.swift */,
+				00A19CF403C593796DFABE99 /* ProjectsView.swift */,
+				E85FEC819B837F333225CE97 /* TaskNoteView.swift */,
+				4C2B767D0652661D1B426A92 /* TaskProject.swift */,
+				1E562195591264E2C67E5592 /* TaskTemplate.swift */,
+				7AFFBA0E2818D78CCADCAA8E /* WindowManager.swift */,
+				AFCA35882CD5F46557AF6EB2 /* Resources */,
+			);
+			path = StickyPad;
+			sourceTree = "<group>";
+		};
+		AFCA35882CD5F46557AF6EB2 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0CB5F5A24EE448FE3FC91961 /* Hermes-Task-Template.md */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		B916B2B1657D97E3E00190F8 = {
+			isa = PBXGroup;
+			children = (
+				2A46B0B5F35C5E9A4FADD416 /* StickyPad */,
+				E9412DE8B2BDDCE22491AFE1 /* StickyPadTests */,
+				EC9F5AF4E7FF7D99C4BC78AD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E9412DE8B2BDDCE22491AFE1 /* StickyPadTests */ = {
+			isa = PBXGroup;
+			children = (
+				3A018451644C6394AA023451 /* StickyPadTests.swift */,
+			);
+			path = StickyPadTests;
+			sourceTree = "<group>";
+		};
+		EC9F5AF4E7FF7D99C4BC78AD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				74C62B28650680B0A428918D /* StickyPad.app */,
+				902F49D8CF7D3FF462ACEFF0 /* StickyPadTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2488A4882362D4A4022A45D8 /* StickyPadTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CCE24A051A3B1F9328E558F8 /* Build configuration list for PBXNativeTarget "StickyPadTests" */;
+			buildPhases = (
+				6E04C3EA0C5BF82B825A0699 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CF2D914D14824B26058F84F2 /* PBXTargetDependency */,
+			);
+			name = StickyPadTests;
+			packageProductDependencies = (
+			);
+			productName = StickyPadTests;
+			productReference = 902F49D8CF7D3FF462ACEFF0 /* StickyPadTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		91A8AAC03FA0931AE388AEF6 /* StickyPad */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 15966A6D7CD1CFFFB2556E5D /* Build configuration list for PBXNativeTarget "StickyPad" */;
+			buildPhases = (
+				73DD63AA5DFF9C44A42AB8B8 /* Sources */,
+				E0416BDEC408BB3953E9304F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StickyPad;
+			packageProductDependencies = (
+			);
+			productName = StickyPad;
+			productReference = 74C62B28650680B0A428918D /* StickyPad.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A53EC850E17D9B30E06D6222 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					91A8AAC03FA0931AE388AEF6 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 1FB184AEB56616343608703B /* Build configuration list for PBXProject "StickyPad" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = B916B2B1657D97E3E00190F8;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = EC9F5AF4E7FF7D99C4BC78AD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				91A8AAC03FA0931AE388AEF6 /* StickyPad */,
+				2488A4882362D4A4022A45D8 /* StickyPadTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E0416BDEC408BB3953E9304F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				62DEAF02F19E4FCECFF51691 /* Hermes-Task-Template.md in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6E04C3EA0C5BF82B825A0699 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0AE9B1C5D760C9547575A9BD /* StickyPadTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73DD63AA5DFF9C44A42AB8B8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF69F1CD92886A9E6C53C187 /* AppDelegate.swift in Sources */,
+				14D555EB7C74CAF1F2BDADFB /* MarkdownView.swift in Sources */,
+				70B943542F7516576EC4D388 /* NoteDocumentModel.swift in Sources */,
+				B69874F0853C26D0363F91D1 /* ProjectStore.swift in Sources */,
+				3330AC77EEB2144A435BC529 /* ProjectsView.swift in Sources */,
+				13EBB4BF566084B897A37BA4 /* TaskNoteView.swift in Sources */,
+				0C34544E0A4BBC579D5FB30D /* TaskProject.swift in Sources */,
+				764F985939E72B299E05CFF3 /* TaskTemplate.swift in Sources */,
+				6377DFF53C1FA16427B8648F /* WindowManager.swift in Sources */,
+				5141E030D58E43E615435FFF /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CF2D914D14824B26058F84F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 91A8AAC03FA0931AE388AEF6 /* StickyPad */;
+			targetProxy = 593CAAD0BBDC65B1823EC711 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1CFA5F2140E3F3F513909DBE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.richardholguin.StickyPadTests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StickyPad.app/Contents/MacOS/StickyPad";
+			};
+			name = Release;
+		};
+		6A6131AC6C86A6CEDD9C4CCE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.richardholguin.StickyPadTests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StickyPad.app/Contents/MacOS/StickyPad";
+			};
+			name = Debug;
+		};
+		7F39493200038B22AC464DB7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Sticky Pad";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright Richard Holguin";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.richardholguin.StickyPad;
+				PRODUCT_NAME = StickyPad;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		C5DF56C9366260043FAD2136 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Sticky Pad";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright Richard Holguin";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.richardholguin.StickyPad;
+				PRODUCT_NAME = StickyPad;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C6E434ED1C4C882A924B5F93 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		F34E2B98648F39B4FFD99A66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		15966A6D7CD1CFFFB2556E5D /* Build configuration list for PBXNativeTarget "StickyPad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C5DF56C9366260043FAD2136 /* Debug */,
+				7F39493200038B22AC464DB7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		1FB184AEB56616343608703B /* Build configuration list for PBXProject "StickyPad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C6E434ED1C4C882A924B5F93 /* Debug */,
+				F34E2B98648F39B4FFD99A66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CCE24A051A3B1F9328E558F8 /* Build configuration list for PBXNativeTarget "StickyPadTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A6131AC6C86A6CEDD9C4CCE /* Debug */,
+				1CFA5F2140E3F3F513909DBE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A53EC850E17D9B30E06D6222 /* Project object */;
+}

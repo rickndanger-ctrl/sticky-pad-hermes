@@ -1,0 +1,25 @@
+.DS_Store
+*.xcuserstate
+xcuserdata/
+
+# Xcode build and test products
+.derived/
+.release-derived/
+.final-test-derived/
+DerivedData/
+build/
+*.xcresult
+
+# Downloaded Secure MCP Tunnel runtime binaries
+tools/
+
+# Local tunnel state and credentials
+.tunnel-profiles/
+*.log
+.env
+.env.*
+!.env.example
+
+# Packaged artifacts
+*.zip
+*.app/
