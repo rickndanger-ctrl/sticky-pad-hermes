@@ -18,7 +18,11 @@ final class WindowManager: NSObject, NSWindowDelegate {
     func showProjects() {
         store.reload()
         if projectWindow == nil {
-            let view = ProjectsView(store: store) { [weak self] url in self?.showNote(url) }
+            let view = ProjectsView(
+                store: store,
+                openProject: { [weak self] url in self?.showNote(url) },
+                deleteProject: { [weak self] url in self?.moveProjectToTrash(url) }
+            )
             let window = NSWindow(contentViewController: NSHostingController(rootView: view))
             window.title = "Sticky Pad Projects"
             window.styleMask = [.titled, .closable, .miniaturizable, .resizable]
@@ -87,6 +91,18 @@ final class WindowManager: NSObject, NSWindowDelegate {
     }
 
     func toggleNotesEnabled() { setNotesEnabled(!notesEnabled) }
+
+    private func moveProjectToTrash(_ url: URL) {
+        guard store.moveProjectToTrash(url) != nil else { return }
+        let key = url.standardizedFileURL.path
+        if let window = noteWindows[key]?.window {
+            noteDocuments.removeValue(forKey: window.windowNumber)
+            window.delegate = nil
+            window.close()
+        }
+        noteWindows.removeValue(forKey: key)
+        hiddenByToggle.remove(key)
+    }
 
     func windowShouldClose(_ sender: NSWindow) -> Bool {
         guard let document = noteDocuments[sender.windowNumber], document.isDirty else { return true }

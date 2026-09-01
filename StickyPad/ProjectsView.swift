@@ -4,6 +4,9 @@ import SwiftUI
 struct ProjectsView: View {
     @ObservedObject var store: ProjectStore
     let openProject: (URL) -> Void
+    let deleteProject: (URL) -> Void
+    @State private var projectPendingDeletion: TaskProject?
+    @State private var templateCopied = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -14,7 +17,18 @@ struct ProjectsView: View {
                         .font(.caption).foregroundStyle(.secondary)
                 }
                 Spacer()
-                Button("Open Project-Loop in TextEdit") { store.openTemplateInTextEdit() }
+                Menu(templateCopied ? "Copied for ChatGPT" : "Project Loop for ChatGPT") {
+                    Button("Open in TextEdit") { store.openTemplateInTextEdit() }
+                    Button("Show File in Finder") { store.revealTemplateFile() }
+                    Divider()
+                    Button("Copy Entire Template") {
+                        guard store.copyTemplateForChatGPT() else { return }
+                        templateCopied = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            templateCopied = false
+                        }
+                    }
+                }
                 Button("New Task") {
                     if let url = store.createBlankProject() { openProject(url) }
                 }
@@ -48,6 +62,13 @@ struct ProjectsView: View {
                         Text(project.modifiedAt, style: .relative)
                             .font(.caption).foregroundStyle(.secondary)
                         Button("Open Sticky") { openProject(project.url) }
+                        Button(role: .destructive) {
+                            projectPendingDeletion = project
+                        } label: {
+                            Image(systemName: "trash")
+                        }
+                        .buttonStyle(.borderless)
+                        .help("Move \(project.url.lastPathComponent) to Trash")
                     }
                     .padding(.vertical, 5)
                     .contentShape(Rectangle())
@@ -68,6 +89,22 @@ struct ProjectsView: View {
             .padding(12)
         }
         .frame(minWidth: 820, minHeight: 420)
+        .alert(
+            "Move Project to Trash?",
+            isPresented: Binding(
+                get: { projectPendingDeletion != nil },
+                set: { if !$0 { projectPendingDeletion = nil } }
+            ),
+            presenting: projectPendingDeletion
+        ) { project in
+            Button("Move to Trash", role: .destructive) {
+                deleteProject(project.url)
+                projectPendingDeletion = nil
+            }
+            Button("Cancel", role: .cancel) { projectPendingDeletion = nil }
+        } message: { project in
+            Text("\(project.url.lastPathComponent) will be moved to the macOS Trash and can be recovered there.")
+        }
     }
 
     private func importMarkdown() {

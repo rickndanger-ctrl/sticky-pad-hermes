@@ -53,6 +53,16 @@ final class StickyPadTests: XCTestCase {
         XCTAssertEqual(try String(contentsOf: first), "# One")
     }
 
+    func testMovesProjectToTrashAndRemovesItFromProjects() throws {
+        let store = ProjectStore(baseURL: temporaryURL, startsMonitoring: false)
+        let projectURL = try XCTUnwrap(store.createProject(title: "Disposable", markdown: "# Disposable"))
+        let trashedURL = try XCTUnwrap(store.moveProjectToTrash(projectURL))
+        defer { try? FileManager.default.removeItem(at: trashedURL) }
+
+        XCTAssertFalse(FileManager.default.fileExists(atPath: projectURL.path))
+        XCTAssertTrue(store.projects.isEmpty)
+    }
+
     func testDocumentSaveIsAtomicAndReloadable() throws {
         let store = ProjectStore(baseURL: temporaryURL, startsMonitoring: false)
         let url = try XCTUnwrap(store.createProject(title: "Task", markdown: "# Old"))

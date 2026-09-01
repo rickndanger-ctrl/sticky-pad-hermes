@@ -114,6 +114,51 @@ final class ProjectStore: ObservableObject {
         NSWorkspace.shared.open(projectsURL)
     }
 
+    func revealTemplateFile() {
+        prepareFolders()
+        NSWorkspace.shared.activateFileViewerSelecting([templateURL])
+    }
+
+    @discardableResult
+    func copyTemplateForChatGPT() -> Bool {
+        prepareFolders()
+        do {
+            let content = try String(contentsOf: templateURL, encoding: .utf8)
+            let pasteboard = NSPasteboard.general
+            pasteboard.clearContents()
+            guard pasteboard.writeObjects([content as NSString]) else {
+                lastError = "Could not copy the project-loop template."
+                return false
+            }
+            lastError = nil
+            return true
+        } catch {
+            lastError = "Could not read the project-loop template: \(error.localizedDescription)"
+            return false
+        }
+    }
+
+    @discardableResult
+    func moveProjectToTrash(_ url: URL) -> URL? {
+        let projectURL = url.standardizedFileURL
+        guard projectURL.deletingLastPathComponent() == projectsURL.standardizedFileURL,
+              projectURL.pathExtension.lowercased() == "md",
+              FileManager.default.fileExists(atPath: projectURL.path) else {
+            lastError = "Could not delete project: the selected file is not a Sticky Pad project."
+            return nil
+        }
+
+        do {
+            var trashedURL: NSURL?
+            try FileManager.default.trashItem(at: projectURL, resultingItemURL: &trashedURL)
+            reload()
+            return trashedURL as URL?
+        } catch {
+            lastError = "Could not move project to Trash: \(error.localizedDescription)"
+            return nil
+        }
+    }
+
     func openTemplateInTextEdit() {
         prepareFolders()
         let textEditURL = URL(fileURLWithPath: "/System/Applications/TextEdit.app", isDirectory: true)

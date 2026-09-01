@@ -24,10 +24,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         projects.target = self
         menu.addItem(projects)
 
-        let newTask = NSMenuItem(title: "New Blank Hermes Task", action: #selector(newTask), keyEquivalent: "n")
-        newTask.target = self
-        menu.addItem(newTask)
-
         let template = NSMenuItem(title: "Open Project-Loop Template in TextEdit", action: #selector(openTemplate), keyEquivalent: "t")
         template.target = self
         menu.addItem(template)
@@ -49,10 +45,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc private func showProjects() { windowManager.showProjects() }
-
-    @objc private func newTask() {
-        if let url = store.createBlankProject() { windowManager.showNote(url) }
-    }
 
     @objc private func openTemplate() { store.openTemplateInTextEdit() }
 
