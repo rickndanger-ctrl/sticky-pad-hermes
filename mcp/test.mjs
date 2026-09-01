@@ -3,9 +3,10 @@ import { spawn } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), "sticky-pad-mcp-"));
-const child = spawn(process.execPath, [new URL("./server.mjs", import.meta.url).pathname], {
+const child = spawn(process.execPath, [fileURLToPath(new URL("./server.mjs", import.meta.url))], {
   env: { ...process.env, STICKY_PAD_PROJECTS_DIR: root }, stdio: ["pipe", "pipe", "inherit"]
 });
 let buffer = "";
