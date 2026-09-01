@@ -1,6 +1,6 @@
 # [PROJECT NAME] AUTONOMOUS BUILD LOOP
 
-> CHATGPT: Replace every bracketed field from Richard's completed project plan. Add exact project phases, paths, commands, acceptance criteria, tests, protected areas, and literal copy. Preserve the state-machine rules. Remove this instruction and all unused placeholders before sending the finished Markdown to Sticky Pad.
+> CHATGPT: This plain-text file is the blank project-loop form Richard hands to you. Replace every bracketed field from Richard's completed project plan. Add exact project phases, paths, commands, acceptance criteria, tests, protected areas, and literal copy. Preserve the state-machine rules. Remove this instruction and all unused placeholders, then submit the completed result to Sticky Pad as a Markdown task.
 
 ## Planning inputs
 

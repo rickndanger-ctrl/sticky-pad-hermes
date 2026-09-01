@@ -9,6 +9,7 @@ final class ProjectStore: ObservableObject {
     let baseURL: URL
     let projectsURL: URL
     let templatesURL: URL
+    var templateURL: URL { templatesURL.appendingPathComponent(TaskTemplate.fileName) }
     private var refreshTimer: Timer?
 
     init(baseURL: URL? = nil, startsMonitoring: Bool = true) {
@@ -29,7 +30,12 @@ final class ProjectStore: ObservableObject {
         do {
             try FileManager.default.createDirectory(at: projectsURL, withIntermediateDirectories: true)
             try FileManager.default.createDirectory(at: templatesURL, withIntermediateDirectories: true)
-            let templateURL = templatesURL.appendingPathComponent(TaskTemplate.fileName)
+            let templateURL = self.templateURL
+            let legacyTemplateURL = templatesURL.appendingPathComponent(TaskTemplate.legacyFileName)
+            if FileManager.default.fileExists(atPath: legacyTemplateURL.path),
+               !FileManager.default.fileExists(atPath: templateURL.path) {
+                try FileManager.default.moveItem(at: legacyTemplateURL, to: templateURL)
+            }
             if !FileManager.default.fileExists(atPath: templateURL.path) {
                 try TaskTemplate.content.write(to: templateURL, atomically: true, encoding: .utf8)
             }
@@ -106,6 +112,22 @@ final class ProjectStore: ObservableObject {
 
     func revealProjectsFolder() {
         NSWorkspace.shared.open(projectsURL)
+    }
+
+    func openTemplateInTextEdit() {
+        prepareFolders()
+        let textEditURL = URL(fileURLWithPath: "/System/Applications/TextEdit.app", isDirectory: true)
+        let configuration = NSWorkspace.OpenConfiguration()
+        NSWorkspace.shared.open(
+            [templateURL],
+            withApplicationAt: textEditURL,
+            configuration: configuration
+        ) { [weak self] _, error in
+            guard let error else { return }
+            Task { @MainActor in
+                self?.lastError = "Could not open the project-loop template in TextEdit: \(error.localizedDescription)"
+            }
+        }
     }
 
     static func safeFileName(_ value: String) -> String {

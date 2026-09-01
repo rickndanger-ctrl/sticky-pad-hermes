@@ -5,6 +5,7 @@ xcuserdata/
 # Xcode build and test products
 .derived/
 .release-derived/
+.install-backups/
 .final-test-derived/
 DerivedData/
 build/

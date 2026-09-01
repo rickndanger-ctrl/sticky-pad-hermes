@@ -3,11 +3,12 @@ import Foundation
 private final class StickyPadBundleToken {}
 
 enum TaskTemplate {
-    static let fileName = "Hermes-Task-Template.md"
+    static let fileName = "Hermes-Task-Template.txt"
+    static let legacyFileName = "Hermes-Task-Template.md"
 
     static var content: String {
         let bundle = Bundle(for: StickyPadBundleToken.self)
-        if let url = bundle.url(forResource: "Hermes-Task-Template", withExtension: "md"),
+        if let url = bundle.url(forResource: "Hermes-Task-Template", withExtension: "txt"),
            let value = try? String(contentsOf: url, encoding: .utf8) {
             return value
         }

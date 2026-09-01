@@ -27,6 +27,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let newTask = NSMenuItem(title: "New Blank Hermes Task", action: #selector(newTask), keyEquivalent: "n")
         newTask.target = self
         menu.addItem(newTask)
+
+        let template = NSMenuItem(title: "Open Project-Loop Template in TextEdit", action: #selector(openTemplate), keyEquivalent: "t")
+        template.target = self
+        menu.addItem(template)
         menu.addItem(.separator())
 
         enabledMenuItem = NSMenuItem(title: "Hide Sticky Notes", action: #selector(toggleNotes), keyEquivalent: "h")
@@ -50,6 +54,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if let url = store.createBlankProject() { windowManager.showNote(url) }
     }
 
+    @objc private func openTemplate() { store.openTemplateInTextEdit() }
+
     @objc private func toggleNotes() {
         windowManager.toggleNotesEnabled()
         enabledMenuItem.title = windowManager.notesEnabled ? "Hide Sticky Notes" : "Show Sticky Notes"
@@ -58,4 +64,3 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func showFolder() { store.revealProjectsFolder() }
     @objc private func quitApp() { NSApp.terminate(nil) }
 }
-

@@ -2,6 +2,8 @@
 
 This local MCP deposits finished task plans into `~/Documents/Sticky Pad/Projects`. Sticky Pad notices new Markdown files within one second.
 
+The input workflow starts with the separate plain-text form `Hermes-Task-Template.txt`. Richard gives that `.txt` file to ChatGPT, ChatGPT fills it out, and only then calls `sticky_pad_create_task` to deposit the completed result as a `.md` task.
+
 ## Local MCP configuration
 
 Use this server command in an MCP-capable desktop client:

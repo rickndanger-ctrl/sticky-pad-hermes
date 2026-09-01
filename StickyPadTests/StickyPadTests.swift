@@ -18,8 +18,22 @@ final class StickyPadTests: XCTestCase {
         let store = ProjectStore(baseURL: temporaryURL, startsMonitoring: false)
         XCTAssertTrue(FileManager.default.fileExists(atPath: store.projectsURL.path))
         XCTAssertTrue(FileManager.default.fileExists(atPath: store.templatesURL.appendingPathComponent(TaskTemplate.fileName).path))
+        XCTAssertEqual(TaskTemplate.fileName, "Hermes-Task-Template.txt")
+        XCTAssertEqual(store.templateURL.pathExtension, "txt")
         XCTAssertTrue(TaskTemplate.content.contains("Build → Review → Test"))
         XCTAssertTrue(TaskTemplate.content.contains("## Finished looks like"))
+    }
+
+    func testMigratesLegacyMarkdownTemplateToTextFile() throws {
+        let templatesURL = temporaryURL.appendingPathComponent("Templates", isDirectory: true)
+        try FileManager.default.createDirectory(at: templatesURL, withIntermediateDirectories: true)
+        let legacyURL = templatesURL.appendingPathComponent(TaskTemplate.legacyFileName)
+        try "legacy template".write(to: legacyURL, atomically: true, encoding: .utf8)
+
+        let store = ProjectStore(baseURL: temporaryURL, startsMonitoring: false)
+        let textURL = store.templatesURL.appendingPathComponent(TaskTemplate.fileName)
+        XCTAssertFalse(FileManager.default.fileExists(atPath: legacyURL.path))
+        XCTAssertEqual(try String(contentsOf: textURL, encoding: .utf8), "legacy template")
     }
 
     func testCreatesAndDiscoversMarkdownProject() throws {

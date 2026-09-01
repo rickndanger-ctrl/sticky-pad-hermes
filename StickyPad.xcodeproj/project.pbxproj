@@ -13,12 +13,12 @@
 		14D555EB7C74CAF1F2BDADFB /* MarkdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727018B96FBEA2B08CF90665 /* MarkdownView.swift */; };
 		3330AC77EEB2144A435BC529 /* ProjectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A19CF403C593796DFABE99 /* ProjectsView.swift */; };
 		5141E030D58E43E615435FFF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F07DF036C1C51CE6F30CBEB /* main.swift */; };
-		62DEAF02F19E4FCECFF51691 /* Hermes-Task-Template.md in Resources */ = {isa = PBXBuildFile; fileRef = 0CB5F5A24EE448FE3FC91961 /* Hermes-Task-Template.md */; };
 		6377DFF53C1FA16427B8648F /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AFFBA0E2818D78CCADCAA8E /* WindowManager.swift */; };
 		70B943542F7516576EC4D388 /* NoteDocumentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D9039D705F78806A9FC1FA4 /* NoteDocumentModel.swift */; };
 		764F985939E72B299E05CFF3 /* TaskTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E562195591264E2C67E5592 /* TaskTemplate.swift */; };
 		B69874F0853C26D0363F91D1 /* ProjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3304A0D49956EE3A8DF57EFC /* ProjectStore.swift */; };
 		BF69F1CD92886A9E6C53C187 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64196C1E53EA685461195FFA /* AppDelegate.swift */; };
+		E0BEB98F34B087E7A3288FF2 /* Hermes-Task-Template.txt in Resources */ = {isa = PBXBuildFile; fileRef = B2F7EB435A5AD40B69845137 /* Hermes-Task-Template.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,7 +33,6 @@
 
 /* Begin PBXFileReference section */
 		00A19CF403C593796DFABE99 /* ProjectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsView.swift; sourceTree = "<group>"; };
-		0CB5F5A24EE448FE3FC91961 /* Hermes-Task-Template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Hermes-Task-Template.md"; sourceTree = "<group>"; };
 		1E562195591264E2C67E5592 /* TaskTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTemplate.swift; sourceTree = "<group>"; };
 		2F07DF036C1C51CE6F30CBEB /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		3304A0D49956EE3A8DF57EFC /* ProjectStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectStore.swift; sourceTree = "<group>"; };
@@ -45,6 +44,7 @@
 		7AFFBA0E2818D78CCADCAA8E /* WindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowManager.swift; sourceTree = "<group>"; };
 		7D9039D705F78806A9FC1FA4 /* NoteDocumentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDocumentModel.swift; sourceTree = "<group>"; };
 		902F49D8CF7D3FF462ACEFF0 /* StickyPadTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StickyPadTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2F7EB435A5AD40B69845137 /* Hermes-Task-Template.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Hermes-Task-Template.txt"; sourceTree = "<group>"; };
 		E85FEC819B837F333225CE97 /* TaskNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskNoteView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -70,7 +70,7 @@
 		AFCA35882CD5F46557AF6EB2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				0CB5F5A24EE448FE3FC91961 /* Hermes-Task-Template.md */,
+				B2F7EB435A5AD40B69845137 /* Hermes-Task-Template.txt */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -179,7 +179,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62DEAF02F19E4FCECFF51691 /* Hermes-Task-Template.md in Resources */,
+				E0BEB98F34B087E7A3288FF2 /* Hermes-Task-Template.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

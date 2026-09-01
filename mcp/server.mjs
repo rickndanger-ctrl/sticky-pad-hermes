@@ -161,7 +161,7 @@ function handle(message) {
     protocolVersion: "2025-06-18",
     capabilities: { tools: { listChanged: false } },
     serverInfo: { name: "sticky-pad", version: "1.1.0" },
-    instructions: "Use sticky_pad_create_task only after the project plan is complete. Include the goal, task details, phased Build-Test-Review loops, required tools, verification evidence, and explicit finished criteria in the Markdown. Read before updating an existing task."
+    instructions: "Richard supplies the blank project-loop form as Hermes-Task-Template.txt. Fill that text form only after project planning is complete, then use sticky_pad_create_task to submit the completed result as a Markdown task. Include the goal, task details, phased Build-Test-Review loops, required tools, verification evidence, and explicit finished criteria. Read before updating an existing task."
   });
   if (method === "ping") return response(id, {});
   if (method === "tools/list") return response(id, { tools });

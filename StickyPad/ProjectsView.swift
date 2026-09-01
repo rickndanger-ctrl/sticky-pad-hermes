@@ -14,6 +14,7 @@ struct ProjectsView: View {
                         .font(.caption).foregroundStyle(.secondary)
                 }
                 Spacer()
+                Button("Open Project-Loop in TextEdit") { store.openTemplateInTextEdit() }
                 Button("New Task") {
                     if let url = store.createBlankProject() { openProject(url) }
                 }
@@ -66,7 +67,7 @@ struct ProjectsView: View {
             }
             .padding(12)
         }
-        .frame(minWidth: 660, minHeight: 420)
+        .frame(minWidth: 820, minHeight: 420)
     }
 
     private func importMarkdown() {
