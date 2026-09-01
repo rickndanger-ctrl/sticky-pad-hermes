@@ -24,7 +24,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         projects.target = self
         menu.addItem(projects)
 
-        let template = NSMenuItem(title: "Open Project-Loop Template in TextEdit", action: #selector(openTemplate), keyEquivalent: "t")
+        let template = NSMenuItem(title: "Copy Entire Template for ChatGPT", action: #selector(copyTemplate), keyEquivalent: "c")
         template.target = self
         menu.addItem(template)
         menu.addItem(.separator())
@@ -46,7 +46,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc private func showProjects() { windowManager.showProjects() }
 
-    @objc private func openTemplate() { store.openTemplateInTextEdit() }
+    @objc private func copyTemplate() { store.copyTemplateForChatGPT() }
 
     @objc private func toggleNotes() {
         windowManager.toggleNotesEnabled()
