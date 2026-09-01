@@ -10,6 +10,10 @@ final class WindowManager: NSObject, NSWindowDelegate {
     private var projectWindow: NSWindowController?
     private(set) var notesEnabled = true
 
+    private static func hoverPreferenceKey(for url: URL) -> String {
+        "StickyPad.hoverMode.\(url.standardizedFileURL.path)"
+    }
+
     init(store: ProjectStore) {
         self.store = store
         super.init()
@@ -48,22 +52,39 @@ final class WindowManager: NSObject, NSWindowDelegate {
         }
 
         let document = NoteDocumentModel(url: url)
-        let view = TaskNoteView(document: document) { [weak store] in store?.reload() }
-        let window = NSWindow(contentViewController: NSHostingController(rootView: view))
+        let preferenceKey = Self.hoverPreferenceKey(for: url)
+        let savedMode = UserDefaults.standard.object(forKey: preferenceKey) as? Bool
+        let isHovering = savedMode ?? true
+        let window = NSWindow()
+        let view = TaskNoteView(
+            document: document,
+            isHovering: isHovering,
+            onSaved: { [weak store] in store?.reload() },
+            onHoverModeChanged: { [weak window] hovering in
+                window?.level = hovering ? .floating : .normal
+                UserDefaults.standard.set(hovering, forKey: preferenceKey)
+            }
+        )
+        window.contentViewController = NSHostingController(rootView: view)
         window.title = document.title
         window.styleMask = [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView]
         window.titlebarAppearsTransparent = true
         window.titleVisibility = .hidden
         window.backgroundColor = NSColor(red: 1.0, green: 0.94, blue: 0.42, alpha: 1)
-        window.level = .floating
+        window.level = isHovering ? .floating : .normal
         window.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
         window.setContentSize(NSSize(width: 320, height: 320))
         window.minSize = NSSize(width: 260, height: 240)
         window.isMovableByWindowBackground = false
         window.isReleasedWhenClosed = false
         window.delegate = self
-        window.setFrameAutosaveName("StickyPad-\(url.lastPathComponent)")
-        if window.frame.origin == .zero { window.center() }
+        let frameName = "StickyPad-\(url.lastPathComponent)"
+        if !window.setFrameUsingName(frameName) {
+            window.center()
+            let cascade = CGFloat(noteWindows.count % 10) * 26
+            window.setFrameOrigin(NSPoint(x: window.frame.origin.x + cascade, y: window.frame.origin.y - cascade))
+        }
+        window.setFrameAutosaveName(frameName)
 
         let controller = NSWindowController(window: window)
         noteWindows[key] = controller

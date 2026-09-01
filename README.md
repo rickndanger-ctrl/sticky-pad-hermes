@@ -7,6 +7,8 @@ Workflow: `Hermes-Task-Template.txt` is the blank project-loop form Richard give
 Use **Copy Entire Template for ChatGPT** from the menu-bar icon to put the full blank form on the clipboard. The Projects window can also open it in TextEdit, reveal the actual upload-ready file in Finder, or copy the entire form.
 
 - Yellow 320×320 floating notes with standard close, minimize, resize, and move controls.
+- Each note has a pin button that switches between always-on-top Hover mode and normal Desktop mode; the choice is remembered per note.
+- Open as many different project notes as needed. New notes cascade instead of appearing directly on top of each other.
 - View rendered Markdown or edit the source directly and save with Command-S.
 - Projects window lists every `.md` file in `~/Documents/Sticky Pad/Projects`.
 - Projects can be moved to the macOS Trash from the Projects window and recovered there if needed.

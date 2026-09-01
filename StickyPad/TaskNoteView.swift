@@ -3,6 +3,20 @@ import SwiftUI
 struct TaskNoteView: View {
     @ObservedObject var document: NoteDocumentModel
     let onSaved: () -> Void
+    let onHoverModeChanged: (Bool) -> Void
+    @State private var isHovering: Bool
+
+    init(
+        document: NoteDocumentModel,
+        isHovering: Bool,
+        onSaved: @escaping () -> Void,
+        onHoverModeChanged: @escaping (Bool) -> Void
+    ) {
+        self.document = document
+        self.onSaved = onSaved
+        self.onHoverModeChanged = onHoverModeChanged
+        _isHovering = State(initialValue: isHovering)
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -38,6 +52,15 @@ struct TaskNoteView: View {
             if document.isDirty {
                 Circle().fill(.orange).frame(width: 7, height: 7).help("Unsaved changes")
             }
+            Button {
+                isHovering.toggle()
+                onHoverModeChanged(isHovering)
+            } label: {
+                Label(isHovering ? "Hover" : "Desktop", systemImage: isHovering ? "pin.fill" : "pin.slash")
+                    .font(.caption)
+            }
+            .help(isHovering ? "Hover mode: keep this note above other windows" : "Desktop mode: allow other windows above this note")
+            .accessibilityLabel(isHovering ? "Switch to Desktop mode" : "Switch to Hover mode")
             Button(document.isEditing ? "Done" : "Edit") {
                 if document.isEditing && document.isDirty {
                     if document.save() { onSaved() }
@@ -66,4 +89,3 @@ struct TaskNoteView: View {
         .background(Color(red: 0.98, green: 0.85, blue: 0.18).opacity(0.88))
     }
 }
-

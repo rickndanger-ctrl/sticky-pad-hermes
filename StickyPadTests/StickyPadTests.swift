@@ -53,6 +53,16 @@ final class StickyPadTests: XCTestCase {
         XCTAssertEqual(try String(contentsOf: first), "# One")
     }
 
+    func testSupportsManyIndependentStickyProjects() throws {
+        let store = ProjectStore(baseURL: temporaryURL, startsMonitoring: false)
+        for index in 1...100 {
+            XCTAssertNotNil(store.createProject(title: "Task \(index)", markdown: "# Task \(index)"))
+        }
+
+        XCTAssertEqual(store.projects.count, 100)
+        XCTAssertEqual(Set(store.projects.map(\.url)).count, 100)
+    }
+
     func testMovesProjectToTrashAndRemovesItFromProjects() throws {
         let store = ProjectStore(baseURL: temporaryURL, startsMonitoring: false)
         let projectURL = try XCTUnwrap(store.createProject(title: "Disposable", markdown: "# Disposable"))
