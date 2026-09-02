@@ -7,6 +7,7 @@ xcuserdata/
 .release-derived/
 .install-backups/
 .final-test-derived/
+.test-derived/
 DerivedData/
 build/
 *.xcresult

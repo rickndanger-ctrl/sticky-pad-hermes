@@ -1,0 +1,192 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-test-validate:
+    runs-on: macos-15
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Show tool versions
+        run: |
+          set -euo pipefail
+          xcodebuild -version
+          xcrun swift --version
+          xcodegen --version
+          node --version
+
+      - name: Require Swift 6
+        run: |
+          set -euo pipefail
+          xcrun swift --version | grep -E 'Swift version 6([. ]|$)'
+
+      - name: Generate Xcode project
+        run: |
+          set -euo pipefail
+          xcodegen generate --spec project.yml
+          git diff --exit-code -- StickyPad.xcodeproj/project.pbxproj
+
+      - name: Run native tests
+        run: |
+          set -euo pipefail
+          xcodebuild test \
+            -project StickyPad.xcodeproj \
+            -scheme StickyPad \
+            -destination 'platform=macOS' \
+            -derivedDataPath "$RUNNER_TEMP/StickyPadDerivedData" \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Check Node.js syntax
+        run: |
+          set -euo pipefail
+          while IFS= read -r -d '' file; do
+            node --check "$file"
+          done < <(find mcp plugins/sticky-pad/mcp -type f -name '*.mjs' -print0)
+
+      - name: Run MCP tests
+        run: |
+          set -euo pipefail
+          node mcp/test.mjs
+          node mcp/hermes-inbox-test.mjs
+          node mcp/hermes-registration-test.mjs
+          node mcp/hermes-remote-deploy-test.mjs
+          node mcp/hermes-installer-transaction-test.mjs
+          node mcp/status-sync-test.mjs
+          node mcp/supervise-chatgpt-tunnel-test.mjs
+          node mcp/tunnel-status-check-test.mjs
+          node plugins/sticky-pad/mcp/test.mjs
+          cmp mcp/server.mjs plugins/sticky-pad/mcp/server.mjs
+          cmp mcp/test.mjs plugins/sticky-pad/mcp/test.mjs
+          cmp StickyPad/Resources/Hermes-Task-Template.txt plugins/sticky-pad/skills/send-to-sticky-pad/references/Hermes-Task-Template.txt
+
+      - name: Check shell syntax
+        run: |
+          set -euo pipefail
+          while IFS= read -r -d '' file; do
+            /bin/zsh -n "$file"
+          done < <(find mcp plugins -type f -name '*.sh' -print0)
+
+      - name: Check installer safety contracts
+        run: |
+          set -euo pipefail
+          test -x mcp/status-sync.mjs
+          test -x mcp/install-hermes-inbox.sh
+          test -f mcp/reconcile-hermes-registration.mjs
+          test -f mcp/hermes-remote-deploy.mjs
+          test -x mcp/install-chatgpt-tunnel-service.sh
+          test -x mcp/tunnel-status-check.mjs
+          grep -q '/bin/chmod 700 "$LOCAL_INSTALL_DIR/status-sync.mjs"' mcp/install-hermes-inbox.sh
+          grep -q 'reconcile-hermes-registration.mjs' mcp/install-hermes-inbox.sh
+          grep -q 'TUNNEL_CLIENT_VERSION="0.0.14"' mcp/install-tunnel-client.sh
+          if grep -R -E 'releases/latest|127\.0\.0\.1:8080|command -v tunnel-client' mcp/*.sh; then
+            echo 'Unsafe or non-reproducible tunnel installer pattern found' >&2
+            exit 1
+          fi
+          if grep -R -E 'export CONTROL_PLANE_API_KEY=' README.md docs mcp/README.md; then
+            echo 'Documentation must use the hidden credential prompt' >&2
+            exit 1
+          fi
+
+      - name: Validate Codex plugin structure
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import re
+          from pathlib import Path
+
+          repo = Path.cwd()
+          plugin = repo / "plugins" / "sticky-pad"
+          manifest_path = plugin / ".codex-plugin" / "plugin.json"
+          mcp_path = plugin / ".mcp.json"
+          marketplace_path = repo / ".agents" / "plugins" / "marketplace.json"
+
+          manifest = json.loads(manifest_path.read_text())
+          mcp = json.loads(mcp_path.read_text())
+          marketplace = json.loads(marketplace_path.read_text())
+
+          name = manifest.get("name")
+          assert name == plugin.name, "plugin folder and manifest name differ"
+          assert re.fullmatch(r"[A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]+)*", name)
+          for field in ("version", "description", "skills", "mcpServers"):
+              assert manifest.get(field), f"missing manifest field: {field}"
+          assert (plugin / manifest["skills"]).is_dir(), "skills path is missing"
+          assert (plugin / manifest["mcpServers"]).is_file(), "MCP manifest path is missing"
+          assert mcp.get("mcpServers"), "no MCP server is declared"
+
+          entries = [entry for entry in marketplace.get("plugins", []) if entry.get("name") == name]
+          assert len(entries) == 1, "marketplace must contain exactly one sticky-pad entry"
+          entry = entries[0]
+          assert entry.get("policy", {}).get("installation") in {"AVAILABLE", "INSTALLED_BY_DEFAULT"}
+          assert entry.get("policy", {}).get("authentication") in {"ON_INSTALL", "ON_USE"}
+          assert entry.get("category"), "marketplace category is missing"
+          source = entry.get("source", {})
+          assert source.get("source") == "local"
+          assert source.get("path") == "./plugins/sticky-pad"
+
+          skill_files = list((plugin / "skills").glob("*/SKILL.md"))
+          assert skill_files, "plugin has no SKILL.md"
+          for skill_file in skill_files:
+              text = skill_file.read_text()
+              assert text.startswith("---\n"), f"missing front matter: {skill_file}"
+              assert re.search(r"^name:\s*[a-z0-9-]+\s*$", text, re.MULTILINE), f"missing skill name: {skill_file}"
+              assert re.search(r"^description:\s*\S", text, re.MULTILINE), f"missing skill description: {skill_file}"
+
+          print("Codex plugin structure is valid")
+          PY
+
+      - name: Scan tracked source for private deployment data
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import re
+          import subprocess
+          from pathlib import Path
+
+          patterns = {
+              "absolute user path": re.compile(rb"/Users/[A-Za-z0-9._-]+/"),
+              "private tunnel id": re.compile(rb"tunnel_[0-9a-fA-F]{24,}"),
+              "OpenAI-style secret": re.compile(rb"\bsk-[A-Za-z0-9_-]{16,}"),
+              "organization id": re.compile(rb"\borg-[A-Za-z0-9]{12,}"),
+          }
+          failures = []
+          for raw in subprocess.check_output(["git", "ls-files", "-z"]).split(b"\0"):
+              if not raw:
+                  continue
+              target = Path(raw.decode())
+              try:
+                  data = target.read_bytes()
+              except (OSError, UnicodeError):
+                  continue
+              for label, pattern in patterns.items():
+                  if pattern.search(data):
+                      failures.append(f"{target}: {label}")
+          if failures:
+              raise SystemExit("Private deployment data found:\n" + "\n".join(failures))
+          print("No private deployment data found in tracked source")
+          PY
+
+      - name: Check patch whitespace
+        run: git diff --check

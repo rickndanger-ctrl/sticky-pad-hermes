@@ -1,0 +1,20 @@
+{
+  "name": "sticky-pad-samples",
+  "interface": {
+    "displayName": "Sticky Pad Samples"
+  },
+  "plugins": [
+    {
+      "name": "sticky-pad",
+      "source": {
+        "source": "local",
+        "path": "./plugins/sticky-pad"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

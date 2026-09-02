@@ -4,6 +4,7 @@ import SwiftUI
 struct ProjectsView: View {
     @ObservedObject var store: ProjectStore
     let openProject: (URL) -> Void
+    let createRegularNote: () -> Void
     let deleteProject: (URL) -> Void
     @State private var projectPendingDeletion: TaskProject?
     @State private var templateCopied = false
@@ -11,16 +12,16 @@ struct ProjectsView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
+                Button("New Sticky Note", action: createRegularNote)
+                    .fixedSize()
+                    .layoutPriority(10)
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Sticky Pad Projects").font(.title2.bold())
-                    Text("Markdown tasks available to Richard and Hermes")
+                    Text("Markdown tasks available to you and Hermes")
                         .font(.caption).foregroundStyle(.secondary)
                 }
                 Spacer()
                 Menu(templateCopied ? "Copied for ChatGPT" : "Project Loop for ChatGPT") {
-                    Button("Open in TextEdit") { store.openTemplateInTextEdit() }
-                    Button("Show File in Finder") { store.revealTemplateFile() }
-                    Divider()
                     Button("Copy Entire Template") {
                         guard store.copyTemplateForChatGPT() else { return }
                         templateCopied = true
@@ -28,6 +29,7 @@ struct ProjectsView: View {
                             templateCopied = false
                         }
                     }
+                    Button("Show File in Finder") { store.revealTemplateFile() }
                 }
                 Button("New Task") {
                     if let url = store.createBlankProject() { openProject(url) }
@@ -103,7 +105,7 @@ struct ProjectsView: View {
             }
             Button("Cancel", role: .cancel) { projectPendingDeletion = nil }
         } message: { project in
-            Text("\(project.url.lastPathComponent) will be moved to the macOS Trash and can be recovered there.")
+            Text("\(project.url.lastPathComponent), its Hermes receipt, and any open unsaved edits will be saved and moved to the macOS Trash, where they can be recovered.")
         }
     }
 

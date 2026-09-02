@@ -1,0 +1,7 @@
+interface:
+  display_name: "Send to Sticky Pad"
+  short_description: "Turn finished plans into desktop sticky notes"
+  default_prompt: "Use $send-to-sticky-pad to turn this finished plan into a desktop sticky note."
+  brand_color: "#F7D928"
+policy:
+  allow_implicit_invocation: true

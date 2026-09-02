@@ -1,0 +1,40 @@
+{
+  "name": "sticky-pad",
+  "version": "0.4.0+codex.20260902045155",
+  "description": "Turn finished project plans into Markdown notes and optionally queue them in a safe Hermes Inbox.",
+  "license": "MIT",
+  "author": {
+    "name": "Richard Holguin",
+    "url": "https://github.com/rickndanger-ctrl"
+  },
+  "homepage": "https://github.com/rickndanger-ctrl/sticky-pad-hermes",
+  "repository": "https://github.com/rickndanger-ctrl/sticky-pad-hermes",
+  "keywords": [
+    "sticky-notes",
+    "mcp",
+    "markdown",
+    "hermes",
+    "macos"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Sticky Pad",
+    "shortDescription": "Send finished plans to native desktop notes.",
+    "longDescription": "Fills a project-loop template, saves and opens the completed Markdown through Sticky Pad, and can optionally queue an existing note as blocked and unassigned in an isolated Hermes Inbox.",
+    "developerName": "Richard Holguin",
+    "category": "Productivity",
+    "capabilities": [
+      "Write",
+      "Local desktop",
+      "Hermes Inbox"
+    ],
+    "websiteURL": "https://github.com/rickndanger-ctrl/sticky-pad-hermes",
+    "defaultPrompt": [
+      "Send this finished project plan to Sticky Pad.",
+      "Turn our plan into a desktop sticky note.",
+      "Queue this Sticky Pad task for Hermes without interrupting Commander."
+    ],
+    "brandColor": "#F7D928"
+  },
+  "mcpServers": "./.mcp.json"
+}

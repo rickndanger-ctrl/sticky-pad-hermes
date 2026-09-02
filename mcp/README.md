@@ -1,60 +1,102 @@
-# Sticky Pad MCP
+# Sticky Pad MCP and Hermes bridge
 
-This local MCP deposits finished task plans into `~/Documents/Sticky Pad/Projects`. Sticky Pad notices new Markdown files within one second.
+The local MCP writes finished project plans to `~/Documents/Sticky Pad/Projects`. `sticky_pad_create_and_open_task` also queues an open request and launches or wakes the native app. The blank `Hermes-Task-Template.txt` stays a plain-text input form; completed tasks are Markdown.
 
-The input workflow starts with the separate plain-text form `Hermes-Task-Template.txt`. Richard gives that `.txt` file to ChatGPT, ChatGPT fills it out, and only then calls `sticky_pad_create_task` to deposit the completed result as a `.md` task.
+## Local MCP
 
-## Local MCP configuration
-
-Use this server command in an MCP-capable desktop client:
+An MCP client can launch the server over stdio:
 
 ```json
 {
   "mcpServers": {
     "sticky-pad": {
       "command": "/usr/bin/env",
-      "args": ["node", "/ABSOLUTE/PATH/TO/server.mjs"]
+      "args": ["node", "/ABSOLUTE/PATH/TO/mcp/server.mjs"]
     }
   }
 }
 ```
 
-The server has four tools: create, list, read, and update. It is dependency-free and writes only inside the Sticky Pad Projects folder. Each tool has a title, explicit input/output schema, structured results, and accurate safety annotations for ChatGPT discovery.
+The server exposes create, create-and-open, list, read, open, update, and queue-for-Hermes tools. Local note tools work with no network configuration.
+
+Hermes delivery is opt-in. If no valid local connection config exists, `sticky_pad_queue_for_hermes` fails safely without changing the note. A successful queue writes an atomic receipt under `~/Documents/Sticky Pad/Delivery Receipts` only after the remote helper proves the attachment hash matches and the card remains blocked and unassigned.
+
+## Hermes host
+
+Requirements:
+
+- a trusted Hermes installation with Node.js 20+;
+- passwordless, key-based SSH from the Sticky Pad Mac; and
+- an SSH hostname containing only letters, numbers, dots, underscores, or hyphens.
+
+Install the bridge:
+
+```sh
+./install-hermes-inbox.sh \
+  --host your-hermes-ssh-host \
+  --install-commander-policy
+```
+
+The installer:
+
+1. discovers safe absolute remote paths for Node.js, Hermes, and the remote home;
+2. deploys and syntax-checks `hermes-inbox-server.mjs` plus its registration reconciler;
+3. removes only the exact `sticky-pad-inbox` registration, then replaces it with the shipped Node.js/helper command;
+4. normalizes that registration to one deterministic stdio configuration and runs `hermes mcp test sticky-pad-inbox`;
+5. writes the private local connection to `~/Library/Application Support/Sticky Pad/MCP/config.json`;
+6. installs `status-sync.mjs` for the native app; and
+7. optionally installs the marked quiet-pull policy with an owner-only backup.
+
+If replacement or connection testing fails, the installer restores the exact prior `sticky-pad-inbox` registration (or leaves it absent on a failed first install). Registrations with similar names are never matched or changed.
+
+The Commander-side MCP exposes only:
+
+- `sticky_pad_inbox_list`;
+- `sticky_pad_inbox_read`; and
+- `sticky_pad_inbox_acknowledge`.
+
+It exposes no claim, assignment, unblock, dispatch, or execution operation. The policy installer does not reload the Hermes gateway; reload only at a verified idle boundary.
 
 ## Private ChatGPT connection
 
-Use OpenAI Secure MCP Tunnel with the server's stdio transport. This keeps the MCP private and avoids exposing an unauthenticated HTTP listener.
+OpenAI Secure MCP Tunnel connects this private stdio server to a user-owned developer-mode ChatGPT app. It is not a public plugin distribution system. Every tester needs their own tunnel ID, runtime key, and account permissions.
 
-Current verified connection:
-
-- ChatGPT app: `Sticky Pad`
-- App ID: `asdk_app_6a9749e534ec819181fa2c06d7505f81`
-- Tunnel: `Sticky Pad Hermes` (`tunnel_6a97459afd308191aeb61ab9aa32dfde`)
-- Authentication: none through the private tunnel
-- Live create test passed on September 1, 2026
-
-Prerequisites when starting the tunnel in a new shell:
-
-- Create a tunnel in OpenAI Platform tunnel settings and copy its `tunnel_...` ID.
-- Create a runtime API key whose principal has Tunnels Read + Use.
-- Export the runtime key as `CONTROL_PLANE_API_KEY` in the shell that starts the tunnel.
-
-Then run:
+Create the tunnel and runtime key in the OpenAI Platform first, then run:
 
 ```sh
-./connect-chatgpt.sh
+./install-chatgpt-tunnel-service.sh 'tunnel_your_own_32_character_hex_id'
 ```
 
-This build defaults to the verified `Sticky Pad Hermes` tunnel, `tunnel_6a97459afd308191aeb61ab9aa32dfde`. Pass a different `tunnel_...` ID only when intentionally switching tunnels.
+The installer asks for the runtime key in a hidden prompt; on a rerun, paste a replacement key or press Return to reuse the saved key. It validates the candidate connection before replacing a saved key, downloads the pinned and tested official `openai/tunnel-client` macOS archive and SHA-256 manifest, verifies the archive, compiles the dedicated Security-framework Keychain helper, stores the runtime key in the login Keychain, and creates a per-user LaunchAgent with private logs. The key is never written to the repository, plist, command line, shell history, or log. If macOS asks for Keychain access during installation, choose the one-time **Allow** button, not **Always Allow**.
 
-The script writes a local profile that references `env:CONTROL_PLANE_API_KEY`; it never stores the key. It runs `doctor --explain` before starting the managed runtime and verifies its JSON status.
+Create the tunnel at <https://platform.openai.com/settings/organization/tunnels>, create its runtime key at <https://platform.openai.com/settings/organization/api-keys>, and add the running private MCP server at <https://chatgpt.com/#settings/Connectors>.
 
-## Loopback HTTP testing
+`connect-chatgpt.sh tunnel_...` is the deliberate foreground repair path. `install-tunnel-client.sh` installs the pinned supported runtime separately. Set `STICKY_PAD_TUNNEL_CLIENT` only to use a different executable you verified yourself.
 
-A minimal loopback HTTP mode is available for local protocol testing:
+Installed service locations:
+
+- MCP files: `~/Library/Application Support/Sticky Pad/MCP`
+- LaunchAgent: `~/Library/LaunchAgents/com.richardholguin.stickypad.tunnel.plist`
+- logs: `~/Library/Logs/Sticky Pad`
+
+## Local HTTP testing
 
 ```sh
+export STICKY_PAD_HTTP_TOKEN="$(/usr/bin/openssl rand -hex 32)"
 node server.mjs --http 7331
 ```
 
-That endpoint is intentionally bound to `127.0.0.1`. ChatGPT web cannot reach a private loopback address directly; use the configured Secure MCP Tunnel. Do not expose this unauthenticated local endpoint to a network.
+Clients must send `Authorization: Bearer $STICKY_PAD_HTTP_TOKEN` and `Content-Type: application/json`. The server requires a token at least 32 characters long, rejects every request with an `Origin` header, and binds to `127.0.0.1`. Never expose it to a LAN or public network.
+
+## Tests
+
+```sh
+node test.mjs
+node hermes-inbox-test.mjs
+node hermes-registration-test.mjs
+node hermes-remote-deploy-test.mjs
+node hermes-installer-transaction-test.mjs
+node status-sync-test.mjs
+node supervise-chatgpt-tunnel-test.mjs
+node tunnel-status-check-test.mjs
+```

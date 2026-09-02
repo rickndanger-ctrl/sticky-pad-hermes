@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "sticky-pad": {
+      "title": "Sticky Pad",
+      "description": "Create, read, update, open, and quietly queue Markdown tasks for Hermes.",
+      "cwd": ".",
+      "command": "node",
+      "args": ["./mcp/server.mjs"]
+    }
+  }
+}
