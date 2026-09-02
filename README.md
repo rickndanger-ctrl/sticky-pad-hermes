@@ -11,6 +11,16 @@ It has four deliberately separate parts:
 
 Regular notes stay local and never become Hermes tasks. Queued Hermes cards remain blocked and unassigned until a human separately releases them.
 
+## Working plugin included
+
+This repository already includes a working `sticky-pad` plugin under `plugins/sticky-pad`; it is not a planned or external add-on. The plugin packages the project-loop skill, the complete plain-text task template, and seven local MCP tools for creating, opening, listing, reading, updating, and quietly queueing Sticky Pad projects.
+
+- **Codex desktop and CLI:** install the plugin directly from this repository's included marketplace.
+- **ChatGPT web:** connect the same Sticky Pad MCP through a private, per-user OpenAI Secure MCP Tunnel.
+- **Public ChatGPT directory:** not submitted. A directory release would be a separate hosted product with a public HTTPS MCP endpoint, per-user authentication, publisher verification, and OpenAI review.
+
+The native app must be installed on the same Mac as the local MCP process because the plugin writes to that user's local Sticky Pad project library.
+
 ## What works
 
 - Create as many regular or project notes as needed.
